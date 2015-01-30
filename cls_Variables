@@ -1,0 +1,179 @@
+Private c_var1 As String
+Private c_var2 As String
+Private c_var3 As String
+Private c_var4 As String
+Private c_var5 As String
+Private c_var6 As String
+Private c_var7 As String
+Private c_var8 As String
+Private c_var9 As String
+Private c_var10 As String
+Private c_var11 As String
+Private c_var12 As String
+Private c_var13 As String
+Private c_var14 As String
+
+Property Get CstrCloudADMCaf() As String
+   CstrCloudADMCaf = c_var1
+End Property
+
+Property Get CstrMasterStaffAdmin() As String
+   CstrMasterStaffAdmin = c_var2
+End Property
+
+Property Get CstrADM_IndexFldr() As String
+   CstrADM_IndexFldr = c_var3
+End Property
+
+Property Get CstrLiveIndex() As String
+   CstrLiveIndex = c_var4
+End Property
+
+Property Get CstrPublicHolXML() As String
+   CstrPublicHolXML = c_var5
+End Property
+
+Property Get CstrCloudWOTCaf() As String
+   CstrCloudWOTCaf = c_var6
+End Property
+
+Property Get CstrLiveWOTs() As String
+   CstrLiveWOTs = c_var7
+End Property
+
+Property Get CstrQuarantine() As String
+   CstrQuarantine = c_var8
+End Property
+
+Property Get CstrTempLiveFldr() As String
+   CstrTempLiveFldr = c_var9
+End Property
+
+Property Get CstrTempSTATSFldr() As String
+   CstrTempSTATSFldr = c_var10
+End Property
+
+Property Get CstrDeletedWOTfolder() As String
+   CstrDeletedWOTfolder = c_var11
+End Property
+
+Property Get CstrSEESPublicHolXML() As String
+   CstrSEESPublicHolXML = c_var12
+End Property
+
+Property Get CstrArchIndxBaseName() As String
+   CstrArchIndxBaseName = c_var13
+End Property
+
+Property Get CstrStatsIndxBaseName() As String
+   CstrStatsIndxBaseName = c_var14
+End Property
+
+
+Public Sub getXMLdata(ByVal strFile As String)
+
+    'Opens the passed XML file and loads all variables from tags
+
+    'if error returns default setting - error handling needed in calling sub
+
+    On Error GoTo errorHandler                   'strFile must exist else error
+
+    Dim objXMLDoc   As DOMDocument
+    Dim objNodeList As IXMLDOMSelection
+    Set objXMLDoc = CreateObject("Microsoft.XMLDOM")
+
+    objXMLDoc.async = False
+
+    'Set default settings if needed
+    Debug.Print "clsVariable object setting default variable values"
+    c_var1 = ""
+    c_var2 = ""
+    c_var3 = ""
+    c_var4 = ""
+    c_var5 = ""
+    c_var6 = ""
+    c_var7 = ""
+    c_var8 = ""
+    c_var9 = ""
+    c_var10 = ""
+    c_var11 = ""
+    c_var12 = ""
+    c_var13 = ""
+    c_var14 = ""
+
+    Debug.Print "clsVariable object attempting to load XML from : " & strFile
+
+    'Load the XML file - if not found/error jumps to end
+    If objXMLDoc.Load(strFile) Then
+
+        On Error Resume Next
+
+        'returns first value found for TAG in xmldoc
+        'Nested items will not return full nest path
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrCloudADMCaf")
+        c_var1 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrMasterStaffAdmin")
+        c_var2 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrADM_IndexFldr")
+        c_var3 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrLiveIndex")
+        c_var4 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrPublicHolXML")
+        c_var5 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrCloudWOTCaf")
+        c_var6 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrLiveWOTs")
+        c_var7 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrQuarantine")
+        c_var8 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrTempLiveFldr")
+        c_var9 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrTempSTATSFldr")
+        c_var10 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrDeletedWOTfolder")
+        c_var11 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrSEESPublicHolXML")
+        c_var12 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrArchIndxBaseName")
+        c_var13 = objNodeList.Item(0).FirstChild.text
+
+        Set objNodeList = objXMLDoc.getElementsByTagName("CstrStatsIndxBaseName")
+        c_var14 = objNodeList.Item(0).FirstChild.text
+
+        Debug.Print "clsVariable object load from XML successful"
+    Else
+        Err.Raise (53)
+    End If
+
+    Set objXMLDoc = Nothing
+    Exit Sub
+
+errorHandler:
+
+    'error logging needed here???
+    Debug.Print "clsVariable object error found: " & Err.Number
+
+End Sub
+
+Private Sub Class_Initialize()
+'enter code here to run when object created
+Debug.Print "clsVariable object created"
+End Sub
+
+Private Sub Class_Terminate()
+'enter code here to run when object destroyed
+Debug.Print "clsVariable object destroyed"
+End Sub
